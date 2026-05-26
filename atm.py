@@ -6,30 +6,20 @@ class ATM:
 
     def check_balance(self):
         """Users balance"""
-        print(f"\nYour current balance is ${self.balance}")
+        return self.balance
     
     def deposit(self, amount):
         """Allow users to deposit money to their account"""
-        if amount > 0:
-            self.balance += amount
-            print(f"\nSuccessfully deposited ${amount}.")
-        elif amount == 0:
-            print(f"\nInvalid error: Amount must greater than 0")
-        else:
-            print(f"\n${amount} must be positive")
+        if amount <= 0:
+            raise ValueError('\n❌ Error: Deposit amount must positive and greater than 0.')
+        
+        self.balance += amount
 
     def withdraw(self, amount):
         """Allow users to withdraw money from they account"""
+        if amount <= 0:
+            raise ValueError('\n❌ Error: Withdraw amount must be positive and greater than 0.')
         if amount > self.balance:
-            print("\nInsufficient amounts in your account")
-        elif amount <= 0:
-            print("\nWithdraw amount must positive or greater than 0")
-        else:
-            self.balance -= amount
-            print(f"\n${amount} successfully withdrew")
-
-def main():
-    pass
-
-if __name__ == "__main__":
-    main()
+            raise ValueError('\nYou have insufficient funds in your account.')
+        
+        self.balance -= amount
