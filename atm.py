@@ -24,6 +24,16 @@ class ATM:
         
         self.balance -= amount
 
+
+def get_number(user_input):
+     """Taking users input for improved validation message"""
+     while True:
+        try:
+            number = float(input(user_input))
+            return number
+        except ValueError:
+            print("\n❌ Please enter a valid number")
+
 def main():
     atm = ATM()
 
@@ -31,7 +41,7 @@ def main():
 
     # DISPLAYING MENU
     while True:
-        print("\n--- ATM MENU ---")
+        print("\nATM MENU")
         print("    1. Check Balance")
         print("    2. Deposit")
         print("    3. Withdraw")
@@ -47,7 +57,7 @@ def main():
         elif user_choice == "2":
             while True:
                 try:
-                    deposit_amount = float(input("\nEnter amount to deposit: "))
+                    deposit_amount = get_number("\nEnter amount to deposit: ")
                     
                     atm.deposit(deposit_amount)
                     print(f"\n✅ You successfully deposited ${deposit_amount}.")
@@ -58,7 +68,7 @@ def main():
         elif user_choice == "3":
             while True:
                 try:
-                    withdraw_amount = float(input("\nEnter amount to withdraw: "))
+                    withdraw_amount = get_number("\nEnter amount to withdraw: ")
                     
                     atm.withdraw(withdraw_amount)
                     print(f"\n✅ You successfully withdrew ${withdraw_amount}.")
