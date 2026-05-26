@@ -10,26 +10,24 @@ class ATM:
     
     def deposit(self, amount):
         """Allow users to deposit money to their account"""
-        if amount > 0:
-            self.balance += amount
-            return True
-        elif amount == 0:
-            return False
-        else:
-            return False
+        if amount <= 0:
+            raise ValueError('\n❌ Error: Deposit amount must positive and greater than 0.')
+        
+        self.balance += amount
 
     def withdraw(self, amount):
         """Allow users to withdraw money from they account"""
-        if amount > self.balance or amount <= 0:
-            return False
+        if amount <= 0:
+            raise ValueError('\n❌ Error: Withdraw amount must be positive and greater than 0.')
+        if amount > self.balance:
+            raise ValueError('\nYou have insufficient funds in your account.')
         
         self.balance -= amount
-        return True
 
 def main():
     atm = ATM()
 
-    print("\n----- WELCOME TO THE ATM MACHINE -----")
+    print("\n----- WELCOME TO YOUR ATM MACHINE -----")
 
     # DISPLAYING MENU
     while True:
@@ -51,30 +49,22 @@ def main():
                 try:
                     deposit_amount = float(input("\nEnter amount to deposit: "))
                     
-                    if atm.deposit(deposit_amount):
-                        print(f"\nYou successfully deposited ${deposit_amount}.")
-                        break
-                    elif deposit_amount == 0:
-                        print(f"\nInvalid error: Amount must greater than 0.")
-                    else:
-                        print(f"\n${deposit_amount} must be positive.")
-                except ValueError:
-                    print("\nPlease enter a valid number")
+                    atm.deposit(deposit_amount)
+                    print(f"\n✅ You successfully deposited ${deposit_amount}.")
+                    break
+                except ValueError as error:
+                    print(error)
         # USERS WITHDRAWING MONEY
         elif user_choice == "3":
             while True:
                 try:
                     withdraw_amount = float(input("\nEnter amount to withdraw: "))
                     
-                    if withdraw_amount <= 0:
-                        print("\nWithdraw amount must be positive and greater than 0.")
-                    elif not atm.withdraw(withdraw_amount):
-                        print("\nYou have insufficient funds in your account.")
-                    else:
-                        print(f"\nYou successfully withdrew ${withdraw_amount}.")
-                        break
-                except ValueError:
-                    print("\nPlease enter a valid number.")
+                    atm.withdraw(withdraw_amount)
+                    print(f"\n✅ You successfully withdrew ${withdraw_amount}.")
+                    break
+                except ValueError as error:
+                    print(error)
         # USERS EXITING THE PROGRAM
         elif user_choice == "4":
             print("\nThank you for using the ATM!")
